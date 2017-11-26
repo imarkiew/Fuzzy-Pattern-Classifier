@@ -5,6 +5,7 @@ import numpy as np
 from sklearn.metrics import mean_squared_error
 from math import sqrt
 from sklearn.utils import shuffle
+from matplotlib import pyplot as plt
 
 def prepare_data(name_and_position_of_file, is_header_present, name_or_number_of_target_column,
                  separator, percent_of_test_examples, is_oversampling_enabled):
@@ -70,3 +71,19 @@ def accuracy(y_1, y_2):
         if yy_1 == yy_2:
             counter += 1
     return (counter/len(y_1))*100
+
+def find_avg_of_vectors_by_column(vectors):
+    return np.mean(vectors, axis=0)
+
+def plot_errors(errors, is_plot_saved, name_of_plot):
+    epochs = range(1, len(errors[0]) + 1)
+    fig = plt.figure()
+    ax = plt.subplot()
+    ax.plot(epochs, errors[0], "b-", label="Average error on training set")
+    ax.plot(epochs, errors[1], "r-", label="Average error on test set")
+    plt.xlabel('i', fontsize=15)
+    plt.ylabel('avg_rmse(i)', fontsize=15)
+    ax.legend()
+    if is_plot_saved:
+        fig.savefig(name_of_plot, bbox_inches='tight')
+    plt.show()
