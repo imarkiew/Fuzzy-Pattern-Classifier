@@ -6,15 +6,15 @@ import FuzzyAlgorithms
 # name_or_number_of_target_column = "class"
 # separator = ","
 
-name_and_position_of_file = "./iris.data"
-is_header_present = False
-name_or_number_of_target_column = 5
-separator = ","
-
-# name_and_position_of_file = "./reprocessed.hungarian.data"
+# name_and_position_of_file = "./iris.data"
 # is_header_present = False
-# name_or_number_of_target_column = 14
-# separator = " "
+# name_or_number_of_target_column = 5
+# separator = ","
+
+name_and_position_of_file = "./reprocessed.hungarian.data"
+is_header_present = False
+name_or_number_of_target_column = 14
+separator = " "
 
 # name_and_position_of_file = "./ConvertedPeptidome2_240.csv"
 # is_header_present = False
@@ -36,6 +36,9 @@ prediction = FuzzyAlgorithms.run_system(Xt, parameters_and_categories)
 print(prediction)
 accuracy = Tools.accuracy(prediction, yt)
 print(accuracy)
+mmc = Tools.MMC(prediction, yt)
+print(mmc)
 avg_train_errors = Tools.find_avg_of_vectors_by_column(train_and_test_errors[0])
 avg_test_errors = Tools.find_avg_of_vectors_by_column(train_and_test_errors[1])
 Tools.plot_errors([avg_train_errors, avg_test_errors], True, "errors.png")
+

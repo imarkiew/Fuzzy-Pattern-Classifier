@@ -6,6 +6,7 @@ from sklearn.metrics import mean_squared_error
 from math import sqrt
 from sklearn.utils import shuffle
 from matplotlib import pyplot as plt
+from sklearn.metrics import matthews_corrcoef
 
 def prepare_data(name_and_position_of_file, is_header_present, name_or_number_of_target_column,
                  separator, percent_of_test_examples, is_oversampling_enabled):
@@ -87,3 +88,6 @@ def plot_errors(errors, is_plot_saved, name_of_plot):
     if is_plot_saved:
         fig.savefig(name_of_plot, bbox_inches='tight')
     plt.show()
+
+def MMC(y_1, y_2):
+    return matthews_corrcoef(y_1, y_2)
