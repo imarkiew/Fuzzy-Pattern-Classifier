@@ -50,7 +50,7 @@ def learn_system(X, y, Xt, yt):
         parameters_and_categories.append([Tools.transform_indyvidual_to_parameters(indyvidual), train_min, train_max, category])
         hof_errors_for_categories.append(train_and_test_errors[0])
         test_errors_for_categories.append(train_and_test_errors[1])
-    return parameters_and_categories, [hof_errors_for_categories, test_errors_for_categories]
+    return parameters_and_categories, hof_errors_for_categories, test_errors_for_categories
 
 def run_system(X, parameters_and_categories):
     prediction = []
