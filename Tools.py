@@ -8,6 +8,8 @@ from sklearn.utils import shuffle
 from matplotlib import pyplot as plt
 from sklearn.metrics import matthews_corrcoef
 from sklearn.metrics import cohen_kappa_score
+import FuzzyAlgorithms
+from statistics import median
 
 def prepare_data(name_and_position_of_file, is_header_present, name_or_number_of_target_column,
                  separator, percent_of_test_examples, is_oversampling_enabled):
@@ -95,3 +97,35 @@ def MMC(y_1, y_2):
 
 def CKS(y_1, y_2):
     return cohen_kappa_score(y_1, y_2)
+
+def make_tests(name_and_position_of_file, is_header_present, name_or_number_of_target_column,
+                                    separator, percent_of_test_examples, is_oversampling_enabled,
+                                    number_of_iterations, is_plot_saved, name_of_plot,
+                                    name_of_saved_file):
+    accuracies = []
+    scores = []
+    all_train_errors = []
+    all_test_errors = []
+    for i in range(1, number_of_iterations + 1):
+        Xx, Xt, yy, yt = prepare_data(name_and_position_of_file, is_header_present, name_or_number_of_target_column,
+                                            separator, percent_of_test_examples, is_oversampling_enabled)
+        parameters_and_categories, train_errors, test_errors = FuzzyAlgorithms.learn_system(Xx, yy, Xt, yt)
+        prediction = FuzzyAlgorithms.run_system(Xt, parameters_and_categories)
+        accuracies.append(accuracy(prediction, yt))
+        measure = CKS(prediction, yt)
+        scores.append(measure)
+        all_train_errors.append(find_avg_of_vectors_by_column(train_errors))
+        all_test_errors.append(find_avg_of_vectors_by_column(test_errors))
+    avg_all_train_erros = find_avg_of_vectors_by_column(all_train_errors)
+    avg_all_test_errors = find_avg_of_vectors_by_column(all_test_errors)
+    min_acc, max_acc = find_min_max(accuracies)
+    median_acc = median(accuracies)
+    min_score, max_score = find_min_max(scores)
+    median_score = median(scores)
+    with open(name_of_saved_file, "w") as file:
+        file.write("Min of acc = {} Median of acc = {} Max of acc = {} \n".format(min_acc, median_acc, max_acc))
+        file.write("Min of score = {} Median of score = {} Max of score = {} \n".format(min_score, median_score, max_score))
+        file.write("Train avg errors = {} \n".format(avg_all_train_erros))
+        file.write("Test avg errors = {} \n".format(avg_all_test_errors))
+    file.close()
+    plot_errors([avg_all_train_erros, avg_all_test_errors], is_plot_saved, name_of_plot)

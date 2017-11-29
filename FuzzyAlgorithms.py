@@ -44,12 +44,12 @@ def learn_system(X, y, Xt, yt):
         train_min, train_max = Tools.find_expanded_min_max(train_subset, delta)
         train_y_bin = Tools.match_categories(category, y)
         test_y_bin = Tools.match_categories(category, yt)
-        indyvidual, train_and_test_errors = GeneticAlgorithms.run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, delta, train_min, train_max, cxpb, mutpb, start_population_size,
+        indyvidual, train_errors, test_errors = GeneticAlgorithms.run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, delta, train_min, train_max, cxpb, mutpb, start_population_size,
                                                 size_of_offspring, number_of_epochs)
         print("\n")
         parameters_and_categories.append([Tools.transform_indyvidual_to_parameters(indyvidual), train_min, train_max, category])
-        hof_errors_for_categories.append(train_and_test_errors[0])
-        test_errors_for_categories.append(train_and_test_errors[1])
+        hof_errors_for_categories.append(train_errors)
+        test_errors_for_categories.append(test_errors)
     return parameters_and_categories, hof_errors_for_categories, test_errors_for_categories
 
 def run_system(X, parameters_and_categories):
