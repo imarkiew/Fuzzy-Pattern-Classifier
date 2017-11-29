@@ -38,11 +38,11 @@ def checkBounds(min, max, delta):
         return wrapper
     return decorator
 
-def update_loss_of_indyvidual(indyvidual, X, y_bin, min, max, offspring, hof, is_update_neabled):
+def update_loss_of_indyvidual(indyvidual, X, y_bin, min, max, offspring, hof, is_update_enabled):
     parameters = Tools.transform_indyvidual_to_parameters(indyvidual)
     output = FuzzyAlgorithms.aggregated_output(X, parameters, min, max)
     rmse = Tools.RMSE(output, y_bin)
-    if is_update_neabled:
+    if is_update_enabled:
         indyvidual.fitness.values = rmse,
         hof.update(offspring)
     return rmse
