@@ -38,13 +38,13 @@ def checkBounds(min, max, delta):
         return wrapper
     return decorator
 
-def update_loss_of_indyvidual(indyvidual, X, y_bin, min, max, population, hof, is_update_neabled):
+def update_loss_of_indyvidual(indyvidual, X, y_bin, min, max, offspring, hof, is_update_neabled):
     parameters = Tools.transform_indyvidual_to_parameters(indyvidual)
     output = FuzzyAlgorithms.aggregated_output(X, parameters, min, max)
     rmse = Tools.RMSE(output, y_bin)
     if is_update_neabled:
         indyvidual.fitness.values = rmse,
-        hof.update(population)
+        hof.update(offspring)
     return rmse
 
 def run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, delta, train_min, train_max, cxpb, mutpb, start_population_size,
@@ -54,7 +54,6 @@ def run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, delta, train_min, trai
     toolbox = base.Toolbox()
     toolbox.register("individual_guess", initIndividual, creator.Individual)
     toolbox.register("population_guess", initPopulation, list, toolbox.individual_guess)
-    toolbox.register("select", tools.selTournament, size_of_offspring, size_of_offspring)
     toolbox.register("mate", tools.cxSimulatedBinary, eta=1)
     toolbox.register("mutate", tools.mutGaussian, mu=0, sigma=0.1, indpb=0.1)
     toolbox.decorate("mate", checkBounds(train_min, train_max, delta))
@@ -68,8 +67,8 @@ def run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, delta, train_min, trai
         indyvidual_errors = []
         offspring = algorithms.varAnd(population, toolbox, cxpb, mutpb)
         for indyvidual in offspring:
-            indyvidual_errors.append(update_loss_of_indyvidual(indyvidual, X, train_y_bin, train_min, train_max, population, hof, True))
-        population[:] = offspring
+            indyvidual_errors.append(update_loss_of_indyvidual(indyvidual, X, train_y_bin, train_min, train_max, offspring, hof, True))
+        population[:] = tools.selRoulette(offspring, size_of_offspring)
         avg_error_on_population.append(np.mean(indyvidual_errors))
         hof_rmse = update_loss_of_indyvidual(hof[0], X, train_y_bin, train_min, train_max, population, hof, False)
         hof_errors.append(hof_rmse)
