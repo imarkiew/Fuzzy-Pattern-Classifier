@@ -1,15 +1,15 @@
 import Tools
 import FuzzyAlgorithms
 
-# name_and_position_of_file = "./diabetes.csv"
-# is_header_present = True
-# name_or_number_of_target_column = "class"
-# separator = ","
-
-name_and_position_of_file = "./iris.data"
-is_header_present = False
-name_or_number_of_target_column = 5
+name_and_position_of_file = "./diabetes.csv"
+is_header_present = True
+name_or_number_of_target_column = "class"
 separator = ","
+
+# name_and_position_of_file = "./iris.data"
+# is_header_present = False
+# name_or_number_of_target_column = 5
+# separator = ","
 
 # name_and_position_of_file = "./reprocessed.hungarian.data"
 # is_header_present = False

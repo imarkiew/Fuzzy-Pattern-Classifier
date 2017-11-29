@@ -70,9 +70,9 @@ def run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, delta, train_min, trai
             indyvidual_errors.append(update_loss_of_indyvidual(indyvidual, X, train_y_bin, train_min, train_max, offspring, hof, True))
         population[:] = tools.selRoulette(offspring, size_of_offspring)
         avg_error_on_population.append(np.mean(indyvidual_errors))
-        hof_rmse = update_loss_of_indyvidual(hof[0], X, train_y_bin, train_min, train_max, population, hof, False)
+        hof_rmse = update_loss_of_indyvidual(hof[0], X, train_y_bin, train_min, train_max, offspring, hof, False)
         hof_errors.append(hof_rmse)
-        test_error = update_loss_of_indyvidual(hof[0], Xt, test_y_bin, train_min, train_max, population, hof, False)
+        test_error = update_loss_of_indyvidual(hof[0], Xt, test_y_bin, train_min, train_max, offspring, hof, False)
         test_errors.append(test_error)
         print("Epoch : {} avg RMSE for population : {} hof : {}".format(i + 1, np.mean(avg_error_on_population[len(avg_error_on_population) - 1]), hof[0]))
     return hof[0], [hof_errors, test_errors]
