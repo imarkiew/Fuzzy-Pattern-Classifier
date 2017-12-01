@@ -42,7 +42,7 @@ is_oversampling_enabled = False
 # avg_test_errors = Tools.find_avg_of_vectors_by_column(test_errors)
 # Tools.plot_errors([avg_train_errors, avg_test_errors], True, "errors.png")
 
-number_of_iterations = 5
+number_of_iterations = 3
 is_plot_saved = True
 name_of_plot = "errors.png"
 name_of_saved_file = "stat.csv"

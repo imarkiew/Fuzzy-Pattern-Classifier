@@ -60,13 +60,12 @@ def transform_parameters_to_indyvidual(list_of_parameters):
     return indyvidual
 
 def transform_indyvidual_to_parameters(indyvidual):
-    number_of_parameters = 3
+    number_of_parameters = 2
     list_of_parameters = []
     for i in range(len(indyvidual)//number_of_parameters):
-        r = indyvidual[number_of_parameters*i]
-        p = indyvidual[number_of_parameters*i + 1]
-        q = indyvidual[number_of_parameters*i + 2]
-        list_of_parameters.append([r, p, q])
+        b = indyvidual[number_of_parameters*i]
+        c = indyvidual[number_of_parameters*i + 1]
+        list_of_parameters.append([b, c])
     return list_of_parameters
 
 def accuracy(y_1, y_2):
@@ -83,10 +82,10 @@ def plot_errors(errors, is_plot_saved, name_of_plot):
     epochs = range(1, len(errors[0]) + 1)
     fig = plt.figure()
     ax = plt.subplot()
-    ax.plot(epochs, errors[0], "b-", label="Average error on training set")
-    ax.plot(epochs, errors[1], "r-", label="Average error on test set")
+    ax.plot(epochs, errors[0], "b-", label="Średni błąd na zbiorach trenujących")
+    ax.plot(epochs, errors[1], "r-", label="Średni błąd na zbiorach testowych")
     plt.xlabel('i', fontsize=15)
-    plt.ylabel('avg_rmse(i)', fontsize=15)
+    plt.ylabel('Średnie RMSE', fontsize=15)
     ax.legend()
     if is_plot_saved:
         fig.savefig(name_of_plot, bbox_inches='tight')

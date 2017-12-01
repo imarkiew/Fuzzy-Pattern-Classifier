@@ -2,17 +2,18 @@ import numpy as np
 import Tools
 import GeneticAlgorithms
 
-def pi_function(x, r, p, q, min, max):
-    m = 2
+def pi_function(x, a, b, c, d):
     value = 0
-    if min < x and p >= x:
-        value = (2**(m - 1))*((x - min) / (r - min))**m
-    elif p < x and r >= x:
-        value = 1 - ((2**(m - 1))*((r - x) / (r - min))**m)
-    elif r < x and q >= x:
-        value = 1 - ((2 ** (m - 1)) * ((x - r) / (max - r)) ** m)
-    elif q < x and max >= x:
-        (2**(m - 1))*((max - x) / (max - r))**m
+    if a <= x and 0.5*(a + b) > x:
+        value = 2*((x - a)/(b - a))**2
+    elif 0.5*(a + b) <= x and b > x:
+        value = 1 - 2*((x - b)/(b - a))**2
+    elif b <= x and x < c:
+        value = 1
+    elif c <= x and 0.5*(c + d) > x:
+        value = 1 - 2*((x - c)/(d - c))**2
+    elif 0.5*(c + d) <= x and d > x:
+        value = 2*((x - d)/(d - c))**2
     return value
 
 def aggregation_operator(values):
@@ -23,7 +24,7 @@ def aggregated_output(X, parameters, min, max):
     for xx in X:
         values = []
         for col, min_col, max_col, param in zip(xx, min, max, parameters):
-            values.append(pi_function(col, param[0], param[1], param[2], min_col, max_col))
+            values.append(pi_function(col, min_col, param[0], param[1], max_col))
         output.append(aggregation_operator(values))
     return output
 
@@ -44,7 +45,7 @@ def learn_system(X, y, Xt, yt):
         train_min, train_max = Tools.find_expanded_min_max(train_subset, delta)
         train_y_bin = Tools.match_categories(category, y)
         test_y_bin = Tools.match_categories(category, yt)
-        indyvidual, train_errors, test_errors = GeneticAlgorithms.run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, delta, train_min, train_max, cxpb, mutpb, start_population_size,
+        indyvidual, train_errors, test_errors = GeneticAlgorithms.run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, train_min, train_max, cxpb, mutpb, start_population_size,
                                                 size_of_offspring, number_of_epochs)
         print("\n")
         parameters_and_categories.append([Tools.transform_indyvidual_to_parameters(indyvidual), train_min, train_max, category])
