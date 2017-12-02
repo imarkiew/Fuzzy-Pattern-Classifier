@@ -29,14 +29,14 @@ def aggregated_output(X, parameters, min, max):
     return output
 
 def learn_system(X, y, Xt, yt):
-    parameters_and_categories = []
     delta = 0.01
     cxpb = 0.5
     mutpb = 0.01
     start_population_size = 50
     size_of_offspring = 50
-    number_of_epochs = 200
+    number_of_epochs = 100
     categories = Tools.find_categories(y)
+    parameters_and_categories = []
     hof_errors_for_categories = []
     test_errors_for_categories = []
     for category in categories:
@@ -45,10 +45,10 @@ def learn_system(X, y, Xt, yt):
         train_min, train_max = Tools.find_expanded_min_max(train_subset, delta)
         train_y_bin = Tools.match_categories(category, y)
         test_y_bin = Tools.match_categories(category, yt)
-        indyvidual, train_errors, test_errors = GeneticAlgorithms.run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, train_min, train_max, cxpb, mutpb, start_population_size,
+        hofs, train_errors, test_errors = GeneticAlgorithms.run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, train_min, train_max, cxpb, mutpb, start_population_size,
                                                 size_of_offspring, number_of_epochs)
         print("\n")
-        parameters_and_categories.append([Tools.transform_indyvidual_to_parameters(indyvidual), train_min, train_max, category])
+        parameters_and_categories.append([[Tools.transform_indyvidual_to_parameters(hof) for hof in hofs], train_min, train_max, category])
         hof_errors_for_categories.append(train_errors)
         test_errors_for_categories.append(test_errors)
     return parameters_and_categories, hof_errors_for_categories, test_errors_for_categories

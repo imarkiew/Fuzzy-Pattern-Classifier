@@ -60,6 +60,7 @@ def run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, train_min, train_max, 
     avg_error_on_population = []
     hof_errors = []
     test_errors = []
+    hofs = []
     for i in range(number_of_epochs):
         indyvidual_errors = []
         offspring = algorithms.varAnd(population, toolbox, cxpb, mutpb)
@@ -71,5 +72,6 @@ def run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, train_min, train_max, 
         hof_errors.append(hof_rmse)
         test_error = update_loss_of_indyvidual(hof[0], Xt, test_y_bin, train_min, train_max, offspring, hof, False)
         test_errors.append(test_error)
+        hofs.append(hof[0])
         print("Epoch : {} avg RMSE for population : {} hof : {}".format(i + 1, avg_error_on_population[len(avg_error_on_population) - 1], hof[0]))
-    return hof[0], hof_errors, test_errors
+    return hofs, hof_errors, test_errors
