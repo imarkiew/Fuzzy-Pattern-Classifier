@@ -29,7 +29,7 @@ separator = ","
 percent_of_test_examples = 0.3
 is_oversampling_enabled = False
 
-number_of_iterations = 10
+number_of_iterations = 3
 is_plot_saved = True
 name_of_error_plot = "errors.png"
 name_of_accuracy_plot = "accuracies.png"

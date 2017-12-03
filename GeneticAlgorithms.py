@@ -37,7 +37,6 @@ def checkBounds(min, max):
 def update_loss_of_indyvidual(indyvidual, X, y_bin, min, max, offspring, hof, is_update_enabled):
     parameters = Tools.transform_indyvidual_to_parameters(indyvidual)
     output = FuzzyAlgorithms.aggregated_output(X, parameters, min, max)
-    #print("output {}".format(output))
     rmse = Tools.RMSE(output, y_bin)
     if is_update_enabled:
         indyvidual.fitness.values = rmse,
@@ -73,5 +72,5 @@ def run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, train_min, train_max, 
         test_error = update_loss_of_indyvidual(hof[0], Xt, test_y_bin, train_min, train_max, offspring, hof, False)
         test_errors.append(test_error)
         hofs.append(hof[0])
-        print("Epoch : {} avg RMSE for population : {} hof : {}".format(i + 1, avg_error_on_population[len(avg_error_on_population) - 1], hof[0]))
+        print("Epoch : {} avg RMSE for population : {} hof : {}".format(i + 1, avg_error_on_population[-1], hof[0]))
     return hofs, hof_errors, test_errors

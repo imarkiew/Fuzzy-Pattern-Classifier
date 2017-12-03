@@ -141,9 +141,8 @@ def run_test(name_and_position_of_file, is_header_present, name_or_number_of_tar
                        for i in range(len(parameters_and_categories[0][0]))]
         train_accuracies_for_epochs = [accuracy(predicion, yy) for predicion in predictions]
         train_scores_for_epochs = [CKS(predicion, yy) for predicion in predictions]
-        predictions = [FuzzyAlgorithms.run_system(Xt, [[rule[0][i], rule[1], rule[2], rule[3]] for rule in
-                                                       parameters_and_categories])
-                                                        for i in range(len(parameters_and_categories[0][0]))]
+        predictions = [FuzzyAlgorithms.run_system(Xt, [[rule[0][i], rule[1], rule[2], rule[3]] for rule in parameters_and_categories])
+                        for i in range(len(parameters_and_categories[0][0]))]
         test_accuracies_for_epochs = [accuracy(predicion, yt) for predicion in predictions]
         test_scores_for_epochs = [CKS(predicion, yt) for predicion in predictions]
         all_train_accuracies.append(train_accuracies_for_epochs)
@@ -158,10 +157,10 @@ def run_test(name_and_position_of_file, is_header_present, name_or_number_of_tar
     avg_all_test_scores = find_avg_of_vectors_by_column(all_test_scores)
     avg_all_train_erros = find_avg_of_vectors_by_column(all_train_errors)
     avg_all_test_errors = find_avg_of_vectors_by_column(all_test_errors)
-    min_acc, max_acc = find_min_max(all_test_accuracies[:][len(all_test_accuracies) - 1])
-    median_acc = median(all_test_accuracies[:][len(all_test_accuracies) - 1])
-    min_score, max_score = find_min_max(all_test_scores[:][len(all_test_scores) - 1])
-    median_score = median(all_test_scores[:][len(all_test_scores) - 1])
+    min_acc, max_acc = find_min_max([xx[-1] for xx in all_test_accuracies])
+    median_acc = median([xx[-1] for xx in all_test_accuracies])
+    min_score, max_score = find_min_max([xx[-1] for xx in all_test_scores])
+    median_score = median([xx[-1] for xx in all_test_scores])
     with open(name_of_saved_file, "w") as file:
         file.write("Min of acc = {} Median of acc = {} Max of acc = {} \n".format(min_acc, median_acc, max_acc))
         file.write("Min of score = {} Median of score = {} Max of score = {} \n".format(min_score, median_score, max_score))
