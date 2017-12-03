@@ -31,10 +31,10 @@ def aggregated_output(X, parameters, min, max):
 def learn_system(X, y, Xt, yt):
     delta = 0.01
     cxpb = 0.5
-    mutpb = 0.01
-    start_population_size = 50
+    mutpb = 0.1
+    start_population_size = 10
     size_of_offspring = 50
-    number_of_epochs = 100
+    number_of_epochs = 200
     categories = Tools.find_categories(y)
     parameters_and_categories = []
     hof_errors_for_categories = []

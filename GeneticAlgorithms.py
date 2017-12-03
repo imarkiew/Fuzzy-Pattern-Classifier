@@ -22,14 +22,17 @@ def checkBounds(min, max):
     def decorator(func):
         def wrapper(*args, **kargs):
             offspring = func(*args, **kargs)
+            delta = 0.01
             for child in offspring:
                for i in range(len(min)):
                    if child[2*i + 0] > max[i]:
-                       child[2*i + 0] = max[i] - 0.25*(max[i] - min[i])
+                       child[2*i + 0] = max[i] - delta*abs(max[i])
                    elif child[2*i + 0] < min[i]:
-                       child[2*i + 0] = min[i] + 0.25*(max[i] - min[i])
-                   if child[2*i + 1] < child[2*i + 0] or child[2*i + 1] < min[i] or child[2*i + 1] > max[i]:
-                       child[2*i + 1] = child[2*i + 0] + 0.5*(max[i] - child[2*i + 0])
+                       child[2*i + 0] = min[i] + delta*abs(min[i])
+                   if child[2*i + 1] < child[2*i + 0]:
+                       child[2*i + 1] = child[2*i + 0] + delta*abs(child[2*i + 0])
+                   elif child[2*i + 1] > max[i]:
+                       child[2*i + 1] = max[i] - delta*abs(max[i])
             return offspring
         return wrapper
     return decorator
@@ -62,10 +65,10 @@ def run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, train_min, train_max, 
     hofs = []
     for i in range(number_of_epochs):
         indyvidual_errors = []
-        offspring = algorithms.varAnd(population, toolbox, cxpb, mutpb)
+        offspring = algorithms.varOr(population, toolbox, size_of_offspring, cxpb, mutpb)
         for indyvidual in offspring:
             indyvidual_errors.append(update_loss_of_indyvidual(indyvidual, X, train_y_bin, train_min, train_max, offspring, hof, True))
-        population[:] = tools.selRoulette(offspring, size_of_offspring)
+        population[:] = tools.selBest(offspring, start_population_size)
         avg_error_on_population.append(np.mean(indyvidual_errors))
         hof_rmse = update_loss_of_indyvidual(hof[0], X, train_y_bin, train_min, train_max, offspring, hof, False)
         hof_errors.append(hof_rmse)
