@@ -30,9 +30,7 @@ def prepare_data(name_and_position_of_file, is_header_present, name_or_number_of
         smt = SMOTE()
         Xx, yy = smt.fit_sample(Xx, yy)
         Xx, yy = shuffle(Xx, yy)
-        return Xx, Xt, yy, yt
-    else:
-        return Xx, Xt, yy, yt
+    return Xx, Xt, yy, yt
 
 def find_categories(y):
     return list(set(y))
