@@ -8,7 +8,7 @@ from sklearn.utils import shuffle
 from matplotlib import pyplot as plt
 from sklearn.metrics import matthews_corrcoef
 from sklearn.metrics import cohen_kappa_score
-import FuzzyAlgorithms
+import FuzzyAlgorithm
 from statistics import median
 
 def prepare_data(name_and_position_of_file, is_header_present, name_or_number_of_target_column,
@@ -134,13 +134,13 @@ def run_test(name_and_position_of_file, is_header_present, name_or_number_of_tar
     for i in range(1, number_of_iterations + 1):
         Xx, Xt, yy, yt = prepare_data(name_and_position_of_file, is_header_present, name_or_number_of_target_column,
                                             separator, percent_of_test_examples, is_oversampling_enabled)
-        parameters_and_categories, train_errors, test_errors = FuzzyAlgorithms.learn_system(Xx, yy, Xt, yt)
-        predictions = [FuzzyAlgorithms.run_system(Xx, [[rule[0][i], rule[1], rule[2], rule[3]] for rule in parameters_and_categories])
+        parameters_and_categories, train_errors, test_errors = FuzzyAlgorithm.learn_system(Xx, yy, Xt, yt)
+        predictions = [FuzzyAlgorithm.run_system(Xx, [[rule[0][i], rule[1], rule[2], rule[3]] for rule in parameters_and_categories])
                        for i in range(len(parameters_and_categories[0][0]))]
         train_accuracies_for_epochs = [accuracy(predicion, yy) for predicion in predictions]
         train_scores_for_epochs = [CKS(predicion, yy) for predicion in predictions]
-        predictions = [FuzzyAlgorithms.run_system(Xt, [[rule[0][i], rule[1], rule[2], rule[3]] for rule in parameters_and_categories])
-                        for i in range(len(parameters_and_categories[0][0]))]
+        predictions = [FuzzyAlgorithm.run_system(Xt, [[rule[0][i], rule[1], rule[2], rule[3]] for rule in parameters_and_categories])
+                       for i in range(len(parameters_and_categories[0][0]))]
         test_accuracies_for_epochs = [accuracy(predicion, yt) for predicion in predictions]
         test_scores_for_epochs = [CKS(predicion, yt) for predicion in predictions]
         all_train_accuracies.append(train_accuracies_for_epochs)

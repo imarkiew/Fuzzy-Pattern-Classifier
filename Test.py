@@ -1,5 +1,5 @@
 import Tools
-import FuzzyAlgorithms
+import FuzzyAlgorithm
 
 # name_and_position_of_file = "./diabetes.csv"
 # is_header_present = True

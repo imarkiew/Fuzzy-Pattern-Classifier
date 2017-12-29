@@ -1,6 +1,6 @@
 import numpy as np
 import Tools
-import GeneticAlgorithms
+import EvolutionStrategy
 
 def pi_function(x, a, b, c, d):
     value = 0
@@ -32,7 +32,7 @@ def learn_system(X, y, Xt, yt):
     delta = 0.01
     cxpb = 0.5
     mutpb = 0.1
-    start_population_size = 10
+    start_population_size = 25
     size_of_offspring = 50
     number_of_epochs = 200
     categories = Tools.find_categories(y)
@@ -45,8 +45,8 @@ def learn_system(X, y, Xt, yt):
         train_min, train_max = Tools.find_expanded_min_max(train_subset, delta)
         train_y_bin = Tools.match_categories(category, y)
         test_y_bin = Tools.match_categories(category, yt)
-        hofs, train_errors, test_errors = GeneticAlgorithms.run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, train_min, train_max, cxpb, mutpb, start_population_size,
-                                                size_of_offspring, number_of_epochs)
+        hofs, train_errors, test_errors = EvolutionStrategy.run_genetic_algorithm(X, train_y_bin, Xt, test_y_bin, train_min, train_max, cxpb, mutpb, start_population_size,
+                                                                                  size_of_offspring, number_of_epochs)
         print("\n")
         parameters_and_categories.append([[Tools.transform_indyvidual_to_parameters(hof) for hof in hofs], train_min, train_max, category])
         hof_errors_for_categories.append(train_errors)

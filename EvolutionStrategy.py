@@ -1,7 +1,7 @@
 import numpy as np
 from deap import base, creator, tools, algorithms
 import random
-import FuzzyAlgorithms
+import FuzzyAlgorithm
 import Tools
 
 def initIndividual(icls, content):
@@ -39,7 +39,7 @@ def checkBounds(min, max):
 
 def update_loss_of_indyvidual(indyvidual, X, y_bin, min, max, offspring, hof, is_update_enabled):
     parameters = Tools.transform_indyvidual_to_parameters(indyvidual)
-    output = FuzzyAlgorithms.aggregated_output(X, parameters, min, max)
+    output = FuzzyAlgorithm.aggregated_output(X, parameters, min, max)
     rmse = Tools.RMSE(output, y_bin)
     if is_update_enabled:
         indyvidual.fitness.values = rmse,
