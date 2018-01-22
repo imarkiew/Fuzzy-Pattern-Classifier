@@ -1,30 +1,9 @@
 import Tools
-import FuzzyAlgorithm
-
-# name_and_position_of_file = "./diabetes.csv"
-# is_header_present = True
-# name_or_number_of_target_column = "class"
-# separator = ","
 
 name_and_position_of_file = "./iris.data"
 is_header_present = False
 name_or_number_of_target_column = 5
 separator = ","
-
-# name_and_position_of_file = "./reprocessed.hungarian.data"
-# is_header_present = False
-# name_or_number_of_target_column = 14
-# separator = " "
-
-# name_and_position_of_file = "./ConvertedPeptidome2_240.csv"
-# is_header_present = False
-# name_or_number_of_target_column = 1
-# separator = ","
-
-# name_and_position_of_file = "./ConvertedLungCancer_500.csv"
-# is_header_present = False
-# name_or_number_of_target_column = 1
-# separator = ","
 
 percent_of_test_examples = 0.3
 is_oversampling_enabled = False
