@@ -34,7 +34,7 @@ def learn_system(X, y, Xt, yt):
     mutpb = 0.1
     start_population_size = 25
     size_of_offspring = 50
-    number_of_epochs = 5
+    number_of_epochs = 100
     categories = Tools.find_categories(y)
     parameters_and_categories = []
     hof_errors_for_categories = []
