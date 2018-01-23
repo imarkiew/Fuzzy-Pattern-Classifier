@@ -1,6 +1,5 @@
 import numpy as np
-import Tools
-import EvolutionStrategy
+import Tools, EvolutionStrategy
 
 def pi_function(x, a, b, c, d):
     value = 0
