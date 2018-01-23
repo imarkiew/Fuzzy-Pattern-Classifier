@@ -1,8 +1,7 @@
 import numpy as np
 from deap import base, creator, tools, algorithms
 import random
-import FuzzyAlgorithm
-import Tools
+import FuzzyAlgorithm, Tools
 
 def initIndividual(icls, content):
     return icls(content)
